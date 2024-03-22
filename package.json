@@ -1,23 +1,36 @@
 {
-	"activationEvents": [
-		"onLanguage:python",
-		"workspaceContains:pyproject.toml",
-		"workspaceContains:.black",
-		"workspaceContains:*.py"
-	],
-	"author": {
-		"email": "Hello@Playform.Cloud",
-		"name": "Playform",
-		"url": "https://playform.cloud"
-	},
+	"name": "black-formatter",
+	"displayName": "Black Formatter",
+	"version": "0.0.1",
+	"private": false,
+	"description": "%extension.description%",
+	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
 	"bugs": {
 		"url": "https://github.com/CodeEditorLand/Foundation/issues"
 	},
-	"capabilities": {
-		"virtualWorkspaces": {
-			"description": "Virtual Workspaces are not supported with Black formatter.",
-			"supported": false
-		}
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
+	},
+	"license": "SEE LICENSE IN LICENSE",
+	"author": {
+		"name": "Playform",
+		"email": "Hello@Playform.Cloud",
+		"url": "https://playform.cloud"
+	},
+	"type": "module",
+	"main": "./dist/extension.js",
+	"scripts": {
+		"compile": "webpack",
+		"compile-tests": "tsc -p . --outDir out",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
+		"smoke-tests": "node ./out/test/ts_tests/runSmokeTest.js",
+		"tests": "node ./out/test/ts_tests/runTest.js",
+		"vsce-package": "vsce package -o black-formatter.vsix",
+		"vscode:prepublish": "npm run package",
+		"watch": "webpack --watch",
+		"watch-tests": "tsc -p . -w --outDir out"
 	},
 	"contributes": {
 		"commands": [
@@ -134,12 +147,17 @@
 			}
 		]
 	},
+	"activationEvents": [
+		"onLanguage:python",
+		"workspaceContains:pyproject.toml",
+		"workspaceContains:.black",
+		"workspaceContains:*.py"
+	],
 	"dependencies": {
 		"@vscode/python-extension": "^1.0.5",
 		"fs-extra": "^11.2.0",
 		"vscode-languageclient": "^9.0.1"
 	},
-	"description": "%extension.description%",
 	"devDependencies": {
 		"@types/chai": "^4.3.11",
 		"@types/fs-extra": "^11.0.4",
@@ -157,49 +175,31 @@
 		"ts-loader": "^9.5.1",
 		"typemoq": "^2.1.0",
 		"typescript": "^5.3.3",
-		"typescript-esbuild": "",
+		"typescript-esbuild": "0.4.5",
 		"webpack": "^5.90.0",
 		"webpack-cli": "^5.1.4"
 	},
-	"displayName": "Black Formatter",
 	"extensionDependencies": [
 		"ms-python.python"
 	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"icon": "icon.png",
 	"galleryBanner": {
 		"color": "#1e415e",
 		"theme": "dark"
 	},
-	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
-	"icon": "icon.png",
-	"l10n": "./l10n",
-	"license": "SEE LICENSE IN LICENSE",
-	"main": "./dist/extension.js",
-	"name": "black-formatter",
 	"preview": true,
-	"private": false,
-	"publishConfig": {
-		"access": "public"
+	"capabilities": {
+		"virtualWorkspaces": {
+			"description": "Virtual Workspaces are not supported with Black formatter.",
+			"supported": false
+		}
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
-	},
-	"scripts": {
-		"compile": "webpack",
-		"compile-tests": "tsc -p . --outDir out",
-		"package": "webpack --mode production --devtool hidden-source-map",
-		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
-		"smoke-tests": "node ./out/test/ts_tests/runSmokeTest.js",
-		"tests": "node ./out/test/ts_tests/runTest.js",
-		"vsce-package": "vsce package -o black-formatter.vsix",
-		"vscode:prepublish": "npm run package",
-		"watch": "webpack --watch",
-		"watch-tests": "tsc -p . -w --outDir out"
-	},
+	"l10n": "./l10n",
 	"serverInfo": {
 		"module": "black",
 		"name": "Black"
-	},
-	"type": "module",
-	"version": "0.0.1"
+	}
 }
