@@ -1,27 +1,7 @@
 {
 	"name": "black-formatter",
 	"displayName": "Black Formatter",
-	"version": "0.0.1",
-	"private": false,
 	"description": "%extension.description%",
-	"keywords": [
-		"land"
-	],
-	"homepage": "HTTPS://GitHub.Com/CodeEditorLand/LandBlackFormatter#readme",
-	"bugs": {
-		"url": "HTTPS://GitHub.Com/CodeEditorLand/LandBlackFormatter/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+HTTPS://github.com/CodeEditorLand/LandBlackFormatter.git"
-	},
-	"license": "SEE LICENSE IN LICENSE",
-	"author": {
-		"name": "🛬 Land —",
-		"email": "Land@PlayForm.Cloud",
-		"url": "HTTPS://Land.PlayForm.Cloud"
-	},
-	"type": "module",
 	"main": "./dist/extension.js",
 	"scripts": {
 		"Document": "Document 'Source/**/*.ts'",
@@ -159,7 +139,6 @@
 	},
 	"devDependencies": {
 		"@playform/build": "0.0.7",
-		"@playform/document": "0.0.6",
 		"@types/chai": "4.3.16",
 		"@types/fs-extra": "11.0.4",
 		"@types/glob": "8.1.0",
@@ -174,9 +153,6 @@
 	"extensionDependencies": [
 		"ms-python.python"
 	],
-	"publishConfig": {
-		"access": "public"
-	},
 	"icon": "icon.png",
 	"galleryBanner": {
 		"color": "#1e415e",
