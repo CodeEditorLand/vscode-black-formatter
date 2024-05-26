@@ -1,18 +1,29 @@
 # Formatter extension for Visual Studio Code using the Black formatter
 
-A Visual Studio Code extension with support for the Black formatter. The extension ships with `black=24.4.2`.
+A Visual Studio Code extension with support for the Black formatter. The
+extension ships with `black=24.4.2`.
 
 > Note: The minimum version of Black this extension supports is `22.3.0`.
 
-This extension supports for all [actively supported versions](https://devguide.python.org/#status-of-python-branches) of the Python language (i.e., Python >= 3.8).
+This extension supports for all
+[actively supported versions](https://devguide.python.org/#status-of-python-branches)
+of the Python language (i.e., Python >= 3.8).
 
-For more information on the Black formatter, see https://black.readthedocs.io/en/stable/.
+For more information on the Black formatter, see
+https://black.readthedocs.io/en/stable/.
 
 ## Usage and Features
 
-The Black extension for Visual Studio Code provides formatting support for your Python files. Check out the [Settings section](#settings) for more details on how to customize the extension.
+The Black extension for Visual Studio Code provides formatting support for your
+Python files. Check out the [Settings section](#settings) for more details on
+how to customize the extension.
 
--   **Integrated formatting**: Once this extension is installed in VS Code, Black will be automatically available as a formatter for Python. This is because the extension ships with a Black binary. You can ensure VS Code uses Black by default for all your Python files by setting the following in your User settings (**View** > **Command Palette...** and run **Preferences: Open User Settings (JSON)**):
+-   **Integrated formatting**: Once this extension is installed in VS Code,
+    Black will be automatically available as a formatter for Python. This is
+    because the extension ships with a Black binary. You can ensure VS Code uses
+    Black by default for all your Python files by setting the following in your
+    User settings (**View** > **Command Palette...** and run **Preferences: Open
+    User Settings (JSON)**):
 
     ```json
       "[python]": {
@@ -20,7 +31,11 @@ The Black extension for Visual Studio Code provides formatting support for your 
       }
     ```
 
--   **Format on save**: Automatically format your Python files on save by setting the `editor.formatOnSave` setting to `true` and the `editor.defaultFormatter` setting to `ms-python.black-formatter`. You can also enable format on save for Python files only by adding the following to your settings:
+-   **Format on save**: Automatically format your Python files on save by
+    setting the `editor.formatOnSave` setting to `true` and the
+    `editor.defaultFormatter` setting to `ms-python.black-formatter`. You can
+    also enable format on save for Python files only by adding the following to
+    your settings:
 
     ```json
       "[python]": {
@@ -29,15 +44,19 @@ The Black extension for Visual Studio Code provides formatting support for your 
       }
     ```
 
--   **Customize Black**: You can customize the behavior of Black by setting the `black-formatter.args` setting.
+-   **Customize Black**: You can customize the behavior of Black by setting the
+    `black-formatter.args` setting.
 
 ### Disabling formatting with Black
 
-If you want to disable Black formatter, you can [disable this extension](https://code.visualstudio.com/docs/editor/extension-marketplace#_disable-an-extension) per workspace in Visual Studio Code.
+If you want to disable Black formatter, you can
+[disable this extension](https://code.visualstudio.com/docs/editor/extension-marketplace#_disable-an-extension)
+per workspace in Visual Studio Code.
 
 ## Settings
 
-There are several settings you can configure to customize the behavior of this extension.
+There are several settings you can configure to customize the behavior of this
+extension.
 
 <table>
   <thead>
@@ -107,19 +126,36 @@ There are several settings you can configure to customize the behavior of this e
 
 ## Logging
 
-From the Command Palette (**View** > **Command Palette ...**), run the **Developer: Set Log Level...** command. Select **Black Formatter** from the **Extension logs** group. Then select the log level you want to set.
+From the Command Palette (**View** > **Command Palette ...**), run the
+**Developer: Set Log Level...** command. Select **Black Formatter** from the
+**Extension logs** group. Then select the log level you want to set.
 
-Alternatively, you can set the `black-formatter.trace.server` setting to `verbose` to get more detailed logs from the Black server. This can be helpful when filing bug reports.
+Alternatively, you can set the `black-formatter.trace.server` setting to
+`verbose` to get more detailed logs from the Black server. This can be helpful
+when filing bug reports.
 
-To open the logs, click on the language status icon (`{}`) on the bottom right of the Status bar, next to the Python language mode. Locate the **Black Formatter** entry and select **Open logs**.
+To open the logs, click on the language status icon (`{}`) on the bottom right
+of the Status bar, next to the Python language mode. Locate the **Black
+Formatter** entry and select **Open logs**.
 
 ## Troubleshooting
 
-In this section, you will find some common issues you might encounter and how to resolve them. If you are experiencing any issues that are not covered here, please [file an issue](https://github.com/microsoft/vscode-black-formatter/issues).
+In this section, you will find some common issues you might encounter and how to
+resolve them. If you are experiencing any issues that are not covered here,
+please
+[file an issue](https://github.com/microsoft/vscode-black-formatter/issues).
 
--   If the `black-formatter.importStrategy` setting is set to `fromEnvironment` but Black is not found in the selected environment, this extension will fallback to using the Black binary that is shipped with the extension. However, if there are dependencies installed in the environment, those dependencies will be used along with the shipped Black binary. This can lead to problems if the dependencies are not compatible with the shipped Black binary.
+-   If the `black-formatter.importStrategy` setting is set to `fromEnvironment`
+    but Black is not found in the selected environment, this extension will
+    fallback to using the Black binary that is shipped with the extension.
+    However, if there are dependencies installed in the environment, those
+    dependencies will be used along with the shipped Black binary. This can lead
+    to problems if the dependencies are not compatible with the shipped Black
+    binary.
 
     To resolve this issue, you can:
 
-    -   Set the `black-formatter.importStrategy` setting to `useBundled` and the `black-formatter.path` setting to point to the custom binary of Black you want to use; or
+    -   Set the `black-formatter.importStrategy` setting to `useBundled` and the
+        `black-formatter.path` setting to point to the custom binary of Black
+        you want to use; or
     -   Install Black in the selected environment.
