@@ -1,15 +1,15 @@
 {
-	"name": "black-formatter",
-	"displayName": "Black Formatter",
-	"description": "%extension.description%",
-	"main": "./dist/extension.js",
-	"scripts": {
-		"compile": "webpack",
-		"compile-tests": "tsc -p . --outDir out",
-		"smoke-tests": "node ./out/test/ts_tests/runSmokeTest.js",
-		"tests": "node ./out/test/ts_tests/runTest.js",
-		"vsce-package": "vsce package -o black-formatter.vsix",
-		"watch-tests": "tsc -p . -w --outDir out"
+	"activationEvents": [
+		"onLanguage:python",
+		"workspaceContains:pyproject.toml",
+		"workspaceContains:.black",
+		"workspaceContains:*.py"
+	],
+	"capabilities": {
+		"virtualWorkspaces": {
+			"description": "Virtual Workspaces are not supported with Black formatter.",
+			"supported": false
+		}
 	},
 	"contributes": {
 		"commands": [
@@ -126,15 +126,10 @@
 			}
 		]
 	},
-	"activationEvents": [
-		"onLanguage:python",
-		"workspaceContains:pyproject.toml",
-		"workspaceContains:.black",
-		"workspaceContains:*.py"
-	],
 	"dependencies": {
 		"fs-extra": "11.2.0"
 	},
+	"description": "%extension.description%",
 	"devDependencies": {
 		"@types/chai": "4.3.14",
 		"@types/fs-extra": "11.0.4",
@@ -147,22 +142,27 @@
 		"ts-loader": "9.5.1",
 		"typemoq": "2.1.0"
 	},
+	"displayName": "Black Formatter",
 	"extensionDependencies": [
 		"ms-python.python"
 	],
-	"icon": "icon.png",
 	"galleryBanner": {
 		"color": "#1e415e",
 		"theme": "dark"
 	},
-	"preview": true,
-	"capabilities": {
-		"virtualWorkspaces": {
-			"description": "Virtual Workspaces are not supported with Black formatter.",
-			"supported": false
-		}
-	},
+	"icon": "icon.png",
 	"l10n": "./l10n",
+	"main": "./dist/extension.js",
+	"name": "black-formatter",
+	"preview": true,
+	"scripts": {
+		"compile": "webpack",
+		"compile-tests": "tsc -p . --outDir out",
+		"smoke-tests": "node ./out/test/ts_tests/runSmokeTest.js",
+		"tests": "node ./out/test/ts_tests/runTest.js",
+		"vsce-package": "vsce package -o black-formatter.vsix",
+		"watch-tests": "tsc -p . -w --outDir out"
+	},
 	"serverInfo": {
 		"module": "black",
 		"name": "Black"
