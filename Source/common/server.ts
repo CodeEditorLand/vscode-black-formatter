@@ -43,14 +43,19 @@ async function createServer(
 	initializationOptions: IInitOptions,
 ): Promise<LanguageClient> {
 	const command = settings.interpreter[0];
+
 	const workspaceUri = Uri.parse(settings.workspace);
+
 	const cwd =
 		settings.cwd === "${fileDirname}" ? workspaceUri.fsPath : settings.cwd;
 
 	// Set debugger path needed for debugging python code.
 	const newEnv = { ...process.env };
+
 	const debuggerPath = await getDebuggerPath();
+
 	const isDebugScript = await fsapi.pathExists(DEBUG_SERVER_SCRIPT_PATH);
+
 	if (newEnv.USE_DEBUGPY && debuggerPath) {
 		newEnv.DEBUGPY_PATH = debuggerPath;
 	} else {
@@ -104,6 +109,7 @@ export async function restartServer(
 ): Promise<LanguageClient | undefined> {
 	if (lsClient) {
 		traceInfo(`Server: Stop requested`);
+
 		try {
 			await lsClient.stop();
 		} catch (ex) {
@@ -131,11 +137,15 @@ export async function restartServer(
 			switch (e.newState) {
 				case State.Stopped:
 					traceVerbose(`Server State: Stopped`);
+
 					break;
+
 				case State.Starting:
 					traceVerbose(`Server State: Starting`);
 					unregisterEmptyFormatter();
+
 					break;
+
 				case State.Running:
 					traceVerbose(`Server State: Running`);
 					updateStatus(
@@ -143,10 +153,12 @@ export async function restartServer(
 						LanguageStatusSeverity.Information,
 						false,
 					);
+
 					break;
 			}
 		}),
 	);
+
 	try {
 		await newLSClient.start();
 	} catch (ex) {
@@ -159,5 +171,6 @@ export async function restartServer(
 	await newLSClient.setTrace(
 		getLSClientTraceLevel(outputChannel.logLevel, env.logLevel),
 	);
+
 	return newLSClient;
 }

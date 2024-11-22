@@ -22,13 +22,16 @@ export interface ISettings {
 	args: string[];
 	path: string[];
 	interpreter: string[];
+
 	importStrategy: string;
 	showNotifications: string;
 }
 
 export function getServerTransport(namespace: string, uri: Uri): TransportKind {
 	const config = getConfiguration(namespace, uri);
+
 	const value = config.get<string>("serverTransport", "stdio");
+
 	return value === "pipe" ? TransportKind.pipe : TransportKind.stdio;
 }
 
@@ -55,6 +58,7 @@ function resolveVariables(
 			traceError(
 				`Value [${v}] must be "string" for \`black-formatter.${key}\`: ${value}`,
 			);
+
 			throw new Error(
 				`Value [${v}] must be "string" for \`black-formatter.${key}\`: ${value}`,
 			);
@@ -67,7 +71,9 @@ function resolveVariables(
 	}
 
 	const substitutions = new Map<string, string>();
+
 	const home = process.env.HOME || process.env.USERPROFILE;
+
 	if (home) {
 		substitutions.set("${userHome}", home);
 	}
@@ -75,11 +81,13 @@ function resolveVariables(
 		substitutions.set("${workspaceFolder}", workspace.uri.fsPath);
 	}
 	substitutions.set("${cwd}", process.cwd());
+
 	getWorkspaceFolders().forEach((w) => {
 		substitutions.set("${workspaceFolder:" + w.name + "}", w.uri.fsPath);
 	});
 
 	env = env || process.env;
+
 	if (env) {
 		for (const [key, value] of Object.entries(env)) {
 			if (value) {
@@ -89,6 +97,7 @@ function resolveVariables(
 	}
 
 	const modifiedValue = [];
+
 	for (const v of value) {
 		if (interpreter && v === "${interpreter}") {
 			modifiedValue.push(...interpreter);
@@ -110,6 +119,7 @@ function getCwd(
 	workspace: WorkspaceFolder,
 ): string {
 	const cwd = config.get<string>("cwd", workspace.uri.fsPath);
+
 	return resolveVariables([cwd], "cwd", workspace)[0];
 }
 
@@ -118,6 +128,7 @@ export function getInterpreterFromSetting(
 	scope?: ConfigurationScope,
 ) {
 	const config = getConfiguration(namespace, scope);
+
 	return config.get<string[]>("interpreter");
 }
 
@@ -129,8 +140,10 @@ export async function getWorkspaceSettings(
 	const config = getConfiguration(namespace, workspace.uri);
 
 	let interpreter: string[] = [];
+
 	if (includeInterpreter) {
 		interpreter = getInterpreterFromSetting(namespace, workspace) ?? [];
+
 		if (interpreter.length === 0) {
 			traceLog(
 				`No interpreter found from setting ${namespace}.interpreter`,
@@ -140,6 +153,7 @@ export async function getWorkspaceSettings(
 			);
 			interpreter =
 				(await getInterpreterDetails(workspace.uri)).path ?? [];
+
 			if (interpreter.length > 0) {
 				traceLog(
 					`Interpreter from ms-python.python extension for ${workspace.uri.fsPath}:`,
@@ -180,6 +194,7 @@ export async function getWorkspaceSettings(
 	traceInfo(
 		`Workspace settings for ${workspace.uri.fsPath} (client side): ${JSON.stringify(workspaceSetting, null, 4)}`,
 	);
+
 	return workspaceSetting;
 }
 
@@ -188,6 +203,7 @@ function getGlobalValue<T>(
 	key: string,
 ): T | undefined {
 	const inspect = config.inspect<T>(key);
+
 	return inspect?.globalValue ?? inspect?.defaultValue;
 }
 
@@ -198,8 +214,10 @@ export async function getGlobalSettings(
 	const config = getConfiguration(namespace);
 
 	let interpreter: string[] = [];
+
 	if (includeInterpreter) {
 		interpreter = getGlobalValue<string[]>(config, "interpreter") ?? [];
+
 		if (interpreter === undefined || interpreter.length === 0) {
 			interpreter = (await getInterpreterDetails()).path ?? [];
 		}
@@ -219,6 +237,7 @@ export async function getGlobalSettings(
 	traceInfo(
 		`Global settings (client side): ${JSON.stringify(setting, null, 4)}`,
 	);
+
 	return setting;
 }
 
@@ -234,7 +253,9 @@ export function checkIfConfigurationChanged(
 		`${namespace}.showNotifications`,
 		`${namespace}.serverTransport`,
 	];
+
 	const changed = settings.map((s) => e.affectsConfiguration(s));
+
 	return changed.includes(true);
 }
 
@@ -244,8 +265,10 @@ export function logDefaultFormatter(): void {
 			uri: workspace.uri,
 			languageId: "python",
 		});
+
 		if (!config) {
 			config = getConfiguration("editor", workspace.uri);
+
 			if (!config) {
 				traceInfo("Unable to get editor configuration");
 			}
@@ -254,6 +277,7 @@ export function logDefaultFormatter(): void {
 		traceInfo(
 			`Default formatter is set to ${formatter} for workspace ${workspace.uri.fsPath}`,
 		);
+
 		if (formatter !== EXTENSION_ID) {
 			traceWarn(
 				`Black Formatter is NOT set as the default formatter for workspace ${workspace.uri.fsPath}`,
@@ -272,14 +296,17 @@ export function logLegacySettings(): void {
 	getWorkspaceFolders().forEach((workspace) => {
 		try {
 			const legacyConfig = getConfiguration("python", workspace.uri);
+
 			const legacyArgs = legacyConfig.get<string[]>(
 				"formatting.blackArgs",
 				[],
 			);
+
 			const legacyPath = legacyConfig.get<string>(
 				"formatting.blackPath",
 				"",
 			);
+
 			if (legacyArgs.length > 0) {
 				traceWarn(
 					`"python.formatting.blackArgs" is deprecated. Use "black-formatter.args" instead.`,
