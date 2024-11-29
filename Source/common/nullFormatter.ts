@@ -24,6 +24,7 @@ export function registerEmptyFormatter(): void {
 export function unregisterEmptyFormatter(): void {
 	if (disposables.length > 0) {
 		disposables.forEach((d) => d.dispose());
+
 		disposables = [];
 	}
 }
